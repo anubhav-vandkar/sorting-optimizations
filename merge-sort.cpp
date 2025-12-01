@@ -1,69 +1,45 @@
 #include <bits/stdc++.h>
+#include <time.h>
+#include <chrono>
+
+#include "merge-serial.hpp"
+#include "merge-avx.hpp"
+
+#define MAX_LEN 100000
+
 using namespace std;
 
-// all cases n*logn
+int main() {
+    vector<int> arr(MAX_LEN, 0);
 
-void merge(int arr[], int l, int m, int r){
+    srand((unsigned)time(NULL));
 
-    int i, j;
-    int n1 = m-l+1, n2 = r-m;
+    for (int i = 0; i < MAX_LEN; ++i) {
+        arr[i] = (rand() % 10);
+    }
 
-    int L[n1], R[n2];
-    for(i=0; i<n1; i++)
-        L[i] = arr[l+i];
+    // cout << "Original array: ";
+    // for (int x : arr) cout << x << " ";
+    // cout << "\n";
     
-    for(i=0; i<n2; i++)
-        R[i]= arr[m+1+i];
-    
-    //merge functioning
-    i=0; j=0;
-    while(i<n1 && j<n2){
-        if(L[i] <= R[j]){
-            arr[l+i+j] = L[i];
-            i++;
-        }
-        else{
-            arr[l+i+j] = R[j];
-            j++;
-        }
-    }
+    auto start_serial = chrono::high_resolution_clock::now();
+    mergeSort(arr); 
+    auto end_serial = chrono::high_resolution_clock::now();
 
-    //adds remaining elements from subarrays
-    while(i<n1){
-        arr[l+i+j] = L[i];
-        i++;
-    }
+    auto start_avx = chrono::high_resolution_clock::now();
+    mergeSortAVX(arr); 
+    auto end_avx = chrono::high_resolution_clock::now();
 
-    while(j<n2){
-        arr[l+i+j] = R[j];
-        j++;
-    }
-}
+    // cout << "Sorted array:   ";
+    // for (int x : arr) 
+    //     cout << x << " ";
+    // cout << "\n";
 
-void mergeSort(int arr[], int l, int r){
+    auto time_serial = chrono::duration_cast<std::chrono::microseconds>(end_serial-start_serial).count();
+    cout<<"Time taken for serial: "<<time_serial<<" us\n";
 
-    if(l<r){
-        int m = l + (r-l)/2;
+    auto time_avx = chrono::duration_cast<std::chrono::microseconds>(end_avx-start_avx).count();
+    cout<<"Time taken for avx enhanced code: "<<time_avx<<" us\n";
 
-        mergeSort(arr, l, m);
-        mergeSort(arr, m+1, r);
-
-        merge(arr, l, m, r);
-    }
-}
-
-int main(){
-    int arr[]={1, 3, 8, 2, 9, 2, 5, 6};
-    int size = *(&arr + 1) - arr, i;
-
-    for(i=0; i<size; i++)
-    cout << arr[i] << " ";
-
-    cout<<endl;
-    
-    mergeSort(arr, 0, size-1);
-
-    for(i=0; i<size; i++)
-    cout << arr[i] << " ";
-
+    return 0;
 }
