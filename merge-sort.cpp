@@ -4,6 +4,7 @@
 
 #include "merge-serial.hpp"
 #include "merge-avx.hpp"
+#include "merge-cuda.cu"
 
 #define MAX_LEN 100000
 
@@ -30,6 +31,10 @@ int main() {
     mergeSortAVX(arr); 
     auto end_avx = chrono::high_resolution_clock::now();
 
+    auto start_cuda = chrono::high_resolution_clock::now();
+    mergeSortCUDA(arr);
+    auto end_cuda = chrono::high_resolution_clock::now();
+
     // cout << "Sorted array:   ";
     // for (int x : arr) 
     //     cout << x << " ";
@@ -40,6 +45,13 @@ int main() {
 
     auto time_avx = chrono::duration_cast<std::chrono::microseconds>(end_avx-start_avx).count();
     cout<<"Time taken for avx enhanced code: "<<time_avx<<" us\n";
+
+    auto time_cuda = chrono::duration_cast<std::chrono::microseconds>(end_cuda-start_cuda).count();
+    cout<<"Time taken for avx enhanced code: "<<time_cuda<<" us\n";
+
+    cout<<"AVX speedup: "<<time_serial/time_avx<<endl;
+    
+    cout<<"CUDA speedup: "<<time_serial/time_cuda<<endl;    
 
     return 0;
 }
