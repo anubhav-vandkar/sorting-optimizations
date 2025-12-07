@@ -4,7 +4,7 @@
 
 #include "merge-serial.hpp"
 #include "merge-avx.hpp"
-#include "merge-cuda.cu"
+#include "merge-cuda.h"
 
 #define MAX_LEN 100000
 
