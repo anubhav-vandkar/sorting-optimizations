@@ -6,7 +6,7 @@
 #include "merge-avx.hpp"
 #include "merge-cuda.h"
 
-#define MAX_LEN 10000000
+#define MAX_LEN 1000000000
 
 using namespace std;
 
