@@ -47,11 +47,11 @@ int main() {
     cout<<"Time taken for avx enhanced code: "<<time_avx<<" us\n";
 
     auto time_cuda = chrono::duration_cast<std::chrono::microseconds>(end_cuda-start_cuda).count();
-    cout<<"Time taken for avx enhanced code: "<<time_cuda<<" us\n";
+    cout<<"Time taken for CUDA enabled code: "<<time_cuda<<" us\n";
 
-    cout<<"AVX speedup: "<<time_serial/time_avx<<endl;
+    cout<<"AVX speedup: "<<(double)time_serial/time_avx<<"x"<<endl;
     
-    cout<<"CUDA speedup: "<<time_serial/time_cuda<<endl;    
+    cout<<"CUDA speedup: "<<(double)time_serial/time_cuda<<"x"<<endl;    
 
     return 0;
 }
