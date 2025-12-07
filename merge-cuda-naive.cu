@@ -23,7 +23,7 @@ __global__ void merge_kernel(const int* d_in, int* d_out, int n, int runLen) {
         d_out[k++] = d_in[j++];
 }
 
-void mergeSortCUDA(std::vector<int>& arr) {
+void mergeSortCUDA_Naive(std::vector<int>& arr) {
     int n = arr.size();
 
     if (n == 0) 

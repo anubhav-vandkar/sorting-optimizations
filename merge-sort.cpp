@@ -31,8 +31,12 @@ int main() {
     mergeSortAVX(arr); 
     auto end_avx = chrono::high_resolution_clock::now();
 
+    auto start_cuda_naive = chrono::high_resolution_clock::now();
+    mergeSortCUDA_Naive(arr);
+    auto end_cuda_naive = chrono::high_resolution_clock::now();
+
     auto start_cuda = chrono::high_resolution_clock::now();
-    mergeSortCUDA(arr);
+    mergeSortCUDA_Shared(arr);
     auto end_cuda = chrono::high_resolution_clock::now();
 
     // cout << "Sorted array:   ";
@@ -46,12 +50,17 @@ int main() {
     auto time_avx = chrono::duration_cast<std::chrono::microseconds>(end_avx-start_avx).count();
     cout<<"Time taken for avx enhanced code: "<<time_avx<<" us\n";
 
+    auto time_cuda_naive = chrono::duration_cast<std::chrono::microseconds>(end_cuda_naive-start_cuda_naive).count();
+    cout<<"Time taken for naive CUDA code: "<<time_cuda_naive<<" us\n";
+
     auto time_cuda = chrono::duration_cast<std::chrono::microseconds>(end_cuda-start_cuda).count();
     cout<<"Time taken for CUDA enabled code: "<<time_cuda<<" us\n";
 
     cout<<"AVX speedup: "<<(double)time_serial/time_avx<<"x"<<endl;
     
-    cout<<"CUDA speedup: "<<(double)time_serial/time_cuda<<"x"<<endl;    
+    cout<<"CUDA naive speedup: "<<(double)time_serial/time_cuda<<"x"<<endl;    
+
+    cout<<"CUDA shared speedup: "<<(double)time_serial/time_cuda<<"x"<<endl;    
 
     return 0;
 }
