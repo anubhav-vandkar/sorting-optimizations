@@ -43,7 +43,7 @@ void mergeSortCUDA(std::vector<int>& arr) {
         int numPairs = (n + 2 * runLen - 1) / (2 * runLen);
         merge_kernel<<<numPairs, 1>>>(d_in, d_out, n, runLen);
         cudaDeviceSynchronize();
-        swap(d_in, d_out);
+        std::swap(d_in, d_out);
     }
 
     if (d_in != d_data) {
