@@ -24,9 +24,7 @@ __device__ __forceinline__ int merge_path_search(const int* A, int alen, const i
     return lo;
 }
 
-__global__ void merge_kernel_parallel(const int* __restrict__ d_in,
-                           int* __restrict__ d_out,
-                           int n, int runLen)
+__global__ void merge_kernel_parallel(const int* __restrict__ d_in, int* __restrict__ d_out, int n, int runLen)
 {
     int pairIdx = blockIdx.x;
     int left  = pairIdx * 2 * runLen;
@@ -44,9 +42,7 @@ __global__ void merge_kernel_parallel(const int* __restrict__ d_in,
     int t = threadIdx.x;
     int stride = blockDim.x;
 
-    // Each thread writes multiple output elements with a grid-stride loop
     for (int outIdx = t; outIdx < total; outIdx += stride) {
-        // Find where output index 'outIdx' splits A/B
         int i = merge_path_search(A, alen, B, blen, outIdx);
         int j = outIdx - i;
 

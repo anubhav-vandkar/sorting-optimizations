@@ -58,7 +58,7 @@ int main() {
 
     cout<<"AVX speedup: "<<(double)time_serial/time_avx<<"x"<<endl;
     
-    cout<<"CUDA naive speedup: "<<(double)time_serial/time_cuda<<"x"<<endl;    
+    cout<<"CUDA naive speedup: "<<(double)time_serial/time_cuda_naive<<"x"<<endl;    
 
     cout<<"CUDA shared speedup: "<<(double)time_serial/time_cuda<<"x"<<endl;    
 
