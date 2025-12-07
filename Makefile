@@ -1,6 +1,5 @@
 all: 
-	g++ -O3 -mavx2 merge-sort.cpp merge-serial.hpp merge-avx.hpp -o merge-serial.o
-	nvcc merge-cuda.cu merge merge-serial.o -o merge.o
+	nvcc  -O3 -Xcompiler -mavx2 merge-sort.cpp merge-cuda.cu  -o merge-sort.o
 
 clean: 
-	rm merge.o
+	rm merge-sort.o
